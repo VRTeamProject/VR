@@ -7,6 +7,8 @@ public class LecturerUI : MonoBehaviour
 {
     public GameObject quizPannel;
     public GameObject videoPannel;
+    public GameObject quizButton;
+
 
     public List<Button> quizButtonList;
     public List<Button> videoButtonList;
