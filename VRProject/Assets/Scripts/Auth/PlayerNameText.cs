@@ -11,7 +11,7 @@ public class PlayerNameText : MonoBehaviour
     {
         if(AuthManager.User != null)
         {
-            nameText.text = $"{AuthManager.User.Email} logged in";
+            //nameText.text = $"{AuthManager.User.Email} logged in";
         }
         else
         {
