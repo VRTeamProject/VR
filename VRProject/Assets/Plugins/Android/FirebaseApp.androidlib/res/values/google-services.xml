@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_android_client_id,@string/default_web_client_id">
+  <string name="gcm_defaultSenderId" translatable="false">971157192052</string>
+  <string name="google_storage_bucket" translatable="false">vrproject-3ab27.appspot.com</string>
+  <string name="project_id" translatable="false">vrproject-3ab27</string>
+  <string name="google_api_key" translatable="false">AIzaSyAsVeCjAvsRAhvLjVqk7q1ZhjwXkEexOjg</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAsVeCjAvsRAhvLjVqk7q1ZhjwXkEexOjg</string>
+  <string name="google_app_id" translatable="false">1:971157192052:android:345b82e5ed0f2a7edc0021</string>
+  <string name="default_android_client_id" translatable="false">971157192052-fbdar1418255t5dda3oog7j2t3flf1rd.apps.googleusercontent.com</string>
+  <string name="default_web_client_id" translatable="false">971157192052-uog65kbmp64qnm1nddoh3fhina43l0i3.apps.googleusercontent.com</string>
+</resources>
