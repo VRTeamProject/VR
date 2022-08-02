@@ -401,6 +401,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 774f686cd6f4ff447b44ea78ca15cf2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  userID: User
   connectionInfoText: {fileID: 1787993945}
   joinButton: {fileID: 176634376}
 --- !u!4 &359014824

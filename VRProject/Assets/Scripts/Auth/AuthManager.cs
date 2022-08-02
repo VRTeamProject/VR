@@ -21,6 +21,13 @@ public class AuthManager : MonoBehaviour
 
     public static FirebaseUser User;
 
+    public string userID;
+
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
     private void Start()
     {
         signInButton.interactable = false;
@@ -72,6 +79,7 @@ public class AuthManager : MonoBehaviour
                 else
                 {
                     User = task.Result;
+                    userID = emailInput.text.Split('@')[0];
                     SceneManager.LoadScene("Lobby");
                 }
             });

@@ -9,9 +9,15 @@ using TMPro;
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
     private readonly string gameVersion = "1";
+    public string userID = "User";
 
     public TextMeshProUGUI connectionInfoText;
     public Button joinButton;
+
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
 
     private void Start()
     {
@@ -24,6 +30,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
+        AuthManager authMaanger = FindObjectOfType<AuthManager>();
+        userID = authMaanger.userID;
+        Destroy(authMaanger.gameObject);
+
         joinButton.interactable = true;
         connectionInfoText.text = "Online : Connected to Master Server";
     }
@@ -62,6 +72,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         connectionInfoText.text = "Connected with room.";
+        
         PhotonNetwork.LoadLevel("Main");
     }
 }
