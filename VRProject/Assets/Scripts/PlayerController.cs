@@ -11,6 +11,7 @@ using Photon.Realtime;
 public class PlayerController : MonoBehaviourPun, IPunObservable
 {
     private XROrigin xrOrigin;
+    public VRRig vrRig;
     [SerializeField] private TextMeshProUGUI userName;
 
     private PlayerInput playerInput;
@@ -24,6 +25,12 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
         playerInput.PlayerControl.Move.canceled += val => { moveDirection = Vector2.zero; };
 
         xrOrigin = FindObjectOfType<XROrigin>();
+        if (photonView.IsMine)
+        {
+            vrRig.head.vrTarget = Camera.main.transform;
+            vrRig.lefHand.vrTarget = xrOrigin.transform.GetChild(1).GetChild(1).transform;
+            vrRig.rightHand.vrTarget = xrOrigin.transform.GetChild(1).GetChild(2).transform;
+        }
         photonView.RPC(nameof(SendPlayerInfo), RpcTarget.All, FindObjectOfType<LobbyManager>().userID);
 
     }
