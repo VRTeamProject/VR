@@ -12,7 +12,7 @@ public class AuthManager : MonoBehaviour
     public bool IsFirebaseReady { get; private set; }
     public bool IsSignInOnProgress { get; private set; }
     
-    public TMP_InputField emailInput;
+    public TMP_InputField emailField;
     public TMP_InputField passwordField;
     public Button signInButton;
 
@@ -21,6 +21,13 @@ public class AuthManager : MonoBehaviour
 
     public static FirebaseUser User;
 
+    public GameObject signInUI;
+    public GameObject virtualKeyboardUI;
+
+    public VirtualTextInputBox virtualTextInputBox;
+
+    private enum InputType { Email, Password}
+    private InputType inputType;
     public string userID;
 
     private void Awake()
@@ -61,7 +68,7 @@ public class AuthManager : MonoBehaviour
         IsSignInOnProgress = true;
         signInButton.interactable = false;
 
-        firebaseAuth.SignInWithEmailAndPasswordAsync(emailInput.text, passwordField.text).ContinueWithOnMainThread(
+        firebaseAuth.SignInWithEmailAndPasswordAsync(emailField.text, passwordField.text).ContinueWithOnMainThread(
             task =>
             {
                 //Debug.Log($"Log in Status: {task.Status}");
@@ -79,9 +86,33 @@ public class AuthManager : MonoBehaviour
                 else
                 {
                     User = task.Result;
-                    userID = emailInput.text.Split('@')[0];
+                    userID = emailField.text.Split('@')[0];
                     SceneManager.LoadScene("Lobby");
                 }
             });
+    }
+
+    public void SelectInputField(int type)
+    {
+        signInUI.SetActive(false);
+        inputType = (InputType)type;
+        virtualTextInputBox.Clear();
+        virtualKeyboardUI.SetActive(true);
+    }
+
+    public void Submit()
+    {
+        switch (inputType)
+        {
+            case InputType.Email:
+                emailField.text = virtualTextInputBox.TextField;
+                break;
+            case InputType.Password:
+                passwordField.text = virtualTextInputBox.TextField;
+                break;
+        }
+
+        virtualKeyboardUI.SetActive(false);
+        signInUI.SetActive(true);
     }
 }

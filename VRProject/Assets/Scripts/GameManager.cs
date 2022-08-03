@@ -6,6 +6,7 @@ using Photon.Realtime;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
+    public List<Transform> spawnPoints;
     private void Awake()
     {
         
@@ -18,7 +19,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void SpawnPlayer()
     {
-        Vector3 spawnPositiopn = new Vector3(PhotonNetwork.LocalPlayer.ActorNumber, 0, 0);
+        Vector3 spawnPositiopn = spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber % 3].position;
         GameObject playerTemp = PhotonNetwork.Instantiate("Player", spawnPositiopn, Quaternion.identity, 0);
         playerTemp.name = FindObjectOfType<LobbyManager>().userID;
     }

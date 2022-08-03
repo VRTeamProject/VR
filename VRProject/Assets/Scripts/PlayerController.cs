@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     {
         if (photonView.IsMine)
         {
-            transform.position += new Vector3(moveDirection.x, 0, moveDirection.y) * Time.deltaTime * 5f;
+            transform.position += new Vector3(moveDirection.x, 0, moveDirection.y) * Time.deltaTime;
             xrOrigin.transform.position = transform.position;
         }
     }
