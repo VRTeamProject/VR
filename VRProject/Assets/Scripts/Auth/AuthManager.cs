@@ -29,6 +29,7 @@ public class AuthManager : MonoBehaviour
     private enum InputType { Email, Password}
     private InputType inputType;
     public string userID;
+    public string userType;
 
     private void Awake()
     {
@@ -87,6 +88,7 @@ public class AuthManager : MonoBehaviour
                 {
                     User = task.Result;
                     userID = emailField.text.Split('@')[0];
+                    userType = emailField.text.Split('@')[1];
                     SceneManager.LoadScene("Lobby");
                 }
             });

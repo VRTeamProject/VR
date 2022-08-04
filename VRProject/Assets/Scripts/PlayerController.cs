@@ -8,14 +8,19 @@ using Unity.XR.CoreUtils;
 using Photon.Pun;
 using Photon.Realtime;
 
+public enum PlayerType { User, Manager }
+
 public class PlayerController : MonoBehaviourPun, IPunObservable
 {
+    
     private XROrigin xrOrigin;
     public VRRig vrRig;
     [SerializeField] private TextMeshProUGUI userName;
 
     private PlayerInput playerInput;
     private Vector2 moveDirection = Vector2.zero;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +35,10 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
             vrRig.head.vrTarget = Camera.main.transform;
             vrRig.lefHand.vrTarget = xrOrigin.transform.GetChild(1).GetChild(1).transform;
             vrRig.rightHand.vrTarget = xrOrigin.transform.GetChild(1).GetChild(2).transform;
+        }
+        else
+        {
+            vrRig.enabled = false;
         }
         photonView.RPC(nameof(SendPlayerInfo), RpcTarget.All, FindObjectOfType<LobbyManager>().userID);
 
@@ -57,6 +66,6 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-           
+
     }
 }

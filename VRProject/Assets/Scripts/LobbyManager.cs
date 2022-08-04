@@ -10,6 +10,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 {
     private readonly string gameVersion = "1";
     public string userID = "User";
+    public string userType;
 
     public TextMeshProUGUI connectionInfoText;
     public Button joinButton;
@@ -32,6 +33,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         AuthManager authMaanger = FindObjectOfType<AuthManager>();
         userID = authMaanger.userID;
+        userType = authMaanger.userType;
         Destroy(authMaanger.gameObject);
 
         joinButton.interactable = true;
