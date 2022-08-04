@@ -516,6 +516,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4203081541964740548}
     m_Modifications:
+    - target: {fileID: 2783901436871258887, guid: 71d03e147a144234199f9d07d78833b7, type: 3}
+      propertyPath: headBodyOffset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2783901436871258887, guid: 71d03e147a144234199f9d07d78833b7, type: 3}
+      propertyPath: headBodyOffset.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2783901436871258887, guid: 71d03e147a144234199f9d07d78833b7, type: 3}
+      propertyPath: rightHand.trackingRotationOffset.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 2783901436871258887, guid: 71d03e147a144234199f9d07d78833b7, type: 3}
+      propertyPath: rightHand.trackingRotationOffset.y
+      value: -90
+      objectReference: {fileID: 0}
     - target: {fileID: 2783901437224605771, guid: 71d03e147a144234199f9d07d78833b7, type: 3}
       propertyPath: m_Name
       value: Robot Kyle
