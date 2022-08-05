@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Photon.Pun;
+using Photon.Realtime;
 [System.Serializable]
 public class VRMap
 {
@@ -17,12 +18,12 @@ public class VRMap
     }
 }
 
-public class VRRig : MonoBehaviour
+public class VRRig : MonoBehaviourPun
 {
     public float turnSmoothness;
 
     public VRMap head;
-    public VRMap lefHand;
+    public VRMap leftHand;
     public VRMap rightHand;
 
     public Transform headConstraint;
@@ -35,11 +36,14 @@ public class VRRig : MonoBehaviour
 
     private void LateUpdate()
     {
-        transform.position = headConstraint.position + headBodyOffset;
-        transform.forward = Vector3.Lerp(transform.forward, Vector3.ProjectOnPlane(headConstraint.up, Vector3.up).normalized, Time.deltaTime * turnSmoothness);
+        if (photonView.IsMine)
+        {
+            transform.position = headConstraint.position + headBodyOffset;
+            transform.forward = Vector3.Lerp(transform.forward, Vector3.ProjectOnPlane(headConstraint.up, Vector3.up).normalized, Time.deltaTime * turnSmoothness);
 
-        head.Map();
-        lefHand.Map();
-        rightHand.Map();
+            head.Map();
+            leftHand.Map();
+            rightHand.Map();
+        }
     }
 }

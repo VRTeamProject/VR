@@ -6,17 +6,31 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 
-public class LobbyManager : MonoBehaviourPunCallbacks
+public class PhotonManager : MonoBehaviourPunCallbacks
 {
+    public static PhotonManager Instance = null;
+
     private readonly string gameVersion = "1";
     public string userID = "User";
+    public string userAuth;
 
     public TextMeshProUGUI connectionInfoText;
     public Button joinButton;
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        if(Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            if(Instance != this)
+            {
+                Destroy(this.gameObject);
+            }
+        }
     }
 
     private void Start()
@@ -32,6 +46,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         AuthManager authMaanger = FindObjectOfType<AuthManager>();
         userID = authMaanger.userID;
+        userAuth = authMaanger.userAuth;
         Destroy(authMaanger.gameObject);
 
         joinButton.interactable = true;

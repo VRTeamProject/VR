@@ -21,6 +21,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         Vector3 spawnPositiopn = spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber % 3].position;
         GameObject playerTemp = PhotonNetwork.Instantiate("Player", spawnPositiopn, Quaternion.identity, 0);
-        playerTemp.name = FindObjectOfType<LobbyManager>().userID;
+        playerTemp.name = FindObjectOfType<PhotonManager>().userID;
     }
 }

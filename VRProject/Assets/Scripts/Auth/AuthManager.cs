@@ -16,10 +16,10 @@ public class AuthManager : MonoBehaviour
     public TMP_InputField passwordField;
     public Button signInButton;
 
-    public static FirebaseApp firebaseApp;
-    public static FirebaseAuth firebaseAuth;
+    //public static FirebaseApp firebaseApp;
+    //public static FirebaseAuth firebaseAuth;
 
-    public static FirebaseUser User;
+    //public static FirebaseUser User;
 
     public GameObject signInUI;
     public GameObject virtualKeyboardUI;
@@ -29,7 +29,7 @@ public class AuthManager : MonoBehaviour
     private enum InputType { Email, Password}
     private InputType inputType;
     public string userID;
-
+    public string userAuth;
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -37,59 +37,60 @@ public class AuthManager : MonoBehaviour
 
     private void Start()
     {
-        signInButton.interactable = false;
+        //signInButton.interactable = false;
 
-        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
-        {
-            var result = task.Result;
-            if(result != DependencyStatus.Available)
-            {
-                Debug.LogError(result.ToString());
-                IsFirebaseReady = false;
-            }
-            else
-            {
-                IsFirebaseReady = true;
-                firebaseApp = FirebaseApp.DefaultInstance;
-                firebaseAuth = FirebaseAuth.DefaultInstance;
-            }
+        //FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
+        //{
+        //    var result = task.Result;
+        //    if(result != DependencyStatus.Available)
+        //    {
+        //        Debug.LogError(result.ToString());
+        //        IsFirebaseReady = false;
+        //    }
+        //    else
+        //    {
+        //        IsFirebaseReady = true;
+        //        firebaseApp = FirebaseApp.DefaultInstance;
+        //        firebaseAuth = FirebaseAuth.DefaultInstance;
+        //    }
 
-            signInButton.interactable = IsFirebaseReady;
-        });
+        //    signInButton.interactable = IsFirebaseReady;
+        //});
     }
 
     public void LogIn()
     {
-        if(!IsFirebaseReady || IsSignInOnProgress || User != null)
-        {
-            return;
-        }
+        //if(!IsFirebaseReady || IsSignInOnProgress || User != null)
+        //{
+        //    return;
+        //}
 
-        IsSignInOnProgress = true;
-        signInButton.interactable = false;
+        //IsSignInOnProgress = true;
+        //signInButton.interactable = false;
 
-        firebaseAuth.SignInWithEmailAndPasswordAsync(emailField.text, passwordField.text).ContinueWithOnMainThread(
-            task =>
-            {
-                //Debug.Log($"Log in Status: {task.Status}");
-                IsSignInOnProgress = false;
-                signInButton.interactable = true;
+        //firebaseAuth.SignInWithEmailAndPasswordAsync(emailField.text, passwordField.text).ContinueWithOnMainThread(
+        //    task =>
+        //    {
+        //        //Debug.Log($"Log in Status: {task.Status}");
+        //        IsSignInOnProgress = false;
+        //        signInButton.interactable = true;
 
-                if(task.IsFaulted)
-                {
-                    Debug.LogError(task.Exception);
-                }
-                else if(task.IsCanceled)
-                {
-                    Debug.LogError("Sign-in canceled");
-                }
-                else
-                {
-                    User = task.Result;
-                    userID = emailField.text.Split('@')[0];
+        //        if(task.IsFaulted)
+        //        {
+        //            Debug.LogError(task.Exception);
+        //        }
+        //        else if(task.IsCanceled)
+        //        {
+        //            Debug.LogError("Sign-in canceled");
+        //        }
+        //        else
+        //        {
+        //            User = task.Result;
+        userID = emailField.text.Split('@', '.')[0];
+        userAuth = emailField.text.Split('@', '.')[1];
                     SceneManager.LoadScene("Lobby");
-                }
-            });
+        //        }
+        //    });
     }
 
     public void SelectInputField(int type)

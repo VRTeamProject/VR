@@ -186,8 +186,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 359014823}
-        m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
+      - m_Target: {fileID: 359014825}
+        m_TargetAssemblyTypeName: PhotonManager, Assembly-CSharp
         m_MethodName: Connect
         m_Mode: 1
         m_Arguments:
@@ -425,29 +425,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 359014824}
-  - component: {fileID: 359014823}
+  - component: {fileID: 359014825}
   m_Layer: 0
-  m_Name: LobbyManager
+  m_Name: NetworkManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &359014823
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 359014822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 774f686cd6f4ff447b44ea78ca15cf2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  userID: User
-  connectionInfoText: {fileID: 1787993945}
-  joinButton: {fileID: 176634376}
 --- !u!4 &359014824
 Transform:
   m_ObjectHideFlags: 0
@@ -463,6 +448,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &359014825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 359014822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f5595c8b76cb1249bb40e7b667080b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  userID: User
+  userAuth: 
+  connectionInfoText: {fileID: 1787993945}
+  joinButton: {fileID: 176634376}
 --- !u!1 &528690832
 GameObject:
   m_ObjectHideFlags: 0

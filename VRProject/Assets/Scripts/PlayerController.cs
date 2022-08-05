@@ -10,53 +10,90 @@ using Photon.Realtime;
 
 public class PlayerController : MonoBehaviourPun, IPunObservable
 {
+    private PhotonManager photonManager;
+
     private XROrigin xrOrigin;
     public VRRig vrRig;
+
+    [SerializeField] private TextMeshProUGUI userAuth;
     [SerializeField] private TextMeshProUGUI userName;
 
-    private PlayerInput playerInput;
-    private Vector2 moveDirection = Vector2.zero;
+    public float turnSmoothness;
+
+
+    public Transform cameraPivot;
+    public Transform uiCanvas;
+
+
     // Start is called before the first frame update
     void Start()
     {
-        playerInput = new PlayerInput();
-        playerInput.Enable();
-        playerInput.PlayerControl.Move.performed += val => { moveDirection = val.ReadValue<Vector2>(); };
-        playerInput.PlayerControl.Move.canceled += val => { moveDirection = Vector2.zero; };
-
-        xrOrigin = FindObjectOfType<XROrigin>();
         if (photonView.IsMine)
         {
-            vrRig.head.vrTarget = Camera.main.transform;
-            vrRig.lefHand.vrTarget = xrOrigin.transform.GetChild(1).GetChild(1).transform;
-            vrRig.rightHand.vrTarget = xrOrigin.transform.GetChild(1).GetChild(2).transform;
+            photonManager = PhotonManager.Instance;
+            Initialize();
         }
-        photonView.RPC(nameof(SendPlayerInfo), RpcTarget.All, FindObjectOfType<LobbyManager>().userID);
-
     }
     // Update is called once per frame
     void Update()
     {
         if (photonView.IsMine)
         {
-            transform.position += new Vector3(moveDirection.x, 0, moveDirection.y) * Time.deltaTime;
-            xrOrigin.transform.position = transform.position;
+
         }
     }
-
-    private void LateUpdate()
+    private void Initialize()
     {
-        
+        photonView.RPC(nameof(SendPlayerInfo), RpcTarget.All, photonManager.userID, photonManager.userAuth);
+
+        transform.localPosition = Vector3.zero;
+        XROriginHandler xrOriginHandler = FindObjectOfType<XROriginHandler>();
+        vrRig.head.vrTarget = xrOriginHandler.head;
+        vrRig.leftHand.vrTarget = xrOriginHandler.leftHand;
+        vrRig.rightHand.vrTarget = xrOriginHandler.rightHand;
+    }
+
+    private void FindXROrigin()
+    {
+        xrOrigin = FindObjectOfType<XROrigin>();
     }
 
     [PunRPC]
-    public void SendPlayerInfo(string userName)
+    public void SendPlayerInfo(string userName, string userAuth)
     {
         this.userName.text = userName;
+        this.userAuth.text = userAuth;
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-           
+        if(stream.IsWriting)
+        {
+            stream.SendNext(xrOrigin.transform.position);
+
+            stream.SendNext(vrRig.head.rigTarget.position);
+            stream.SendNext(vrRig.leftHand.rigTarget.position);
+            stream.SendNext(vrRig.rightHand.rigTarget.position);
+            stream.SendNext(transform.position);
+
+            stream.SendNext(vrRig.head.rigTarget.rotation);
+            stream.SendNext(vrRig.leftHand.rigTarget.rotation);
+            stream.SendNext(vrRig.rightHand.rigTarget.rotation);
+            stream.SendNext(transform.rotation);
+        }
+        else if (stream.IsReading)
+        {
+            transform.position = (Vector3)stream.ReceiveNext();
+
+            this.vrRig.head.rigTarget.position = (Vector3)stream.ReceiveNext();
+            this.vrRig.leftHand.rigTarget.position = (Vector3)stream.ReceiveNext();
+            this.vrRig.rightHand.rigTarget.position = (Vector3)stream.ReceiveNext();
+            this.transform.position = (Vector3)stream.ReceiveNext();
+
+            this.vrRig.head.rigTarget.rotation = (Quaternion)stream.ReceiveNext();
+            this.vrRig.leftHand.rigTarget.rotation = (Quaternion)stream.ReceiveNext();
+            this.vrRig.rightHand.rigTarget.rotation = (Quaternion)stream.ReceiveNext();
+            this.transform.rotation = (Quaternion)stream.ReceiveNext();
+        }
     }
 }

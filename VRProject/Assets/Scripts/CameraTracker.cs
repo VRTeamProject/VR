@@ -18,5 +18,6 @@ public class CameraTracker : MonoBehaviour
     void Update()
     {
         rectTransform.LookAt(camera.transform);
+        
     }
 }
